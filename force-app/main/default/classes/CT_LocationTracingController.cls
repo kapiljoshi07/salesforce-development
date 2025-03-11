@@ -61,14 +61,10 @@ public with sharing class CT_LocationTracingController {
             personsSet.add(trace.Person__c);
         }
 
-        System.debug('locationsSet: '+locationsSet);
-        System.debug('personsSet: '+personsSet);
-
         List<Location_Tracing__c> existingTraceRecords = [SELECT Id, Location__c, Person__c FROM Location_Tracing__c WHERE Location__c IN:locationsSet AND Person__c IN: personsSet];
 
         Map<Id, Set<Id>> locationIdToPersonSetMap = new Map<Id, Set<Id>>();
         if(existingTraceRecords!=null && existingTraceRecords.size()>0){
-            System.debug('Records Existing');
             for(Location_Tracing__c trace: existingTraceRecords){
                 if(locationIdToPersonSetMap.containsKey(trace.Location__c)){
                     locationIdToPersonSetMap.get(trace.Location__c).add(trace.Location__c);
@@ -77,17 +73,13 @@ public with sharing class CT_LocationTracingController {
                 }
             }
         }
-
-        System.debug('locationIdToPersonSetMap '+locationIdToPersonSetMap);
         
         List<Location_Tracing__c> duplicates = new List<Location_Tracing__c>();
         for(Location_Tracing__c trace: newLocationTracings){
             if(locationIdToPersonSetMap.containsKey(trace.Location__c) && locationIdToPersonSetMap.get(trace.Location__c).contains(trace.Person__c)){
-                System.debug('Found Duplicate');
                 duplicates.add(trace);
             }
         }
-        System.debug('duplicates '+duplicates);
         return duplicates;
     }
 
