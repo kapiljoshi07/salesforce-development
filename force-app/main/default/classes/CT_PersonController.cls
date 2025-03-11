@@ -30,7 +30,7 @@ public with sharing class CT_PersonController {
     * @return Person__c
     */
     public static List<Person__c> searchPeople(String searchQuery){
-        Map<String, Object> params = new Map<String, String>{'searchString'=>'%'+searchQuery+'%'};
+        Map<String, Object> params = new Map<String, Object>{'searchString'=>'%'+searchQuery+'%'};
         String query = 'SELECT Id, Name, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c FROM Person__c WHERE (Mobile__c LIKE:searchString OR Name LIKE:searchString OR Token__c LIKE:searchString) ORDER BY Status_Update_Date__c DESC NULLS LAST';
         List<SObject> sObjectList = Database.queryWithBinds(query, params, AccessLevel.USER_MODE);
         List<Person__c> personsList = new List<Person__c>();
@@ -43,13 +43,16 @@ public with sharing class CT_PersonController {
     /*
     * Retreives a Person record which matches id passed as the search query
     * @param String search query
-    * @return List<Person__c>
+    * @return Person__c
     */
     public static Person__c getPersonById(String personId){
-        Map<String, Object> params = new Map<String, String>{'personId'=> personId};
+        Map<String, Object> params = new Map<String, Object>{'personId'=> personId};
         String query = 'SELECT Id, Name, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c FROM Person__c WHERE Id=:personId LIMIT 1';
         List<SObject> sObjectList = Database.queryWithBinds(query, params, AccessLevel.USER_MODE);
-        Person__c person = (Person__c)sObjectList.get(0);
+        Person__c person = new Person__c();
+        if(sObjectList!=null && sObjectList.size()>0){
+            person = (Person__c)sObjectList.get(0);
+        }
         return person;
     }
 
