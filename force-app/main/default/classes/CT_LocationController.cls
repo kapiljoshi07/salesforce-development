@@ -44,4 +44,17 @@ public with sharing class CT_LocationController {
         }
         return location;
     }
+
+    /* 
+    * Returns number of location in each status
+    * @params: null
+    @ @return: Map<String,Integer>
+    */
+    public static Map<String, Integer> getStatusCount(){
+        Map<String, Integer> mapOfStatusAndNumOfLoc = new Map<String, Integer>();
+        for(AggregateResult aggRes: [SELECT Status__c, Count(Id) FROM Location__c GROUP BY Status__c]){
+            mapOfStatusAndNumOfLoc.put((String)aggRes.get('Status__c'), (Integer)aggRes.get('expr0'));
+        }
+        return mapOfStatusAndNumOfLoc;
+    }
 }
