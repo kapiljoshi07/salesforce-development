@@ -1,5 +1,13 @@
 public with sharing class CT_LocationController {
 
+    public static void updateStatusDateOnStatusChange(List<Location__c> newLocations, Map<Id,Location__c> oldLocationMap){
+        for(Location__c loc: newLocations){
+            if(loc.Status__c != oldLocationMap.get(loc.Id).Status__c){
+                loc.Status_Update_Date__c = System.now().date();
+            }
+        }
+    }
+    
     /*
     * Retreives a list of 100 Location records
     * The list is sorted by Status Update Date in descending order
