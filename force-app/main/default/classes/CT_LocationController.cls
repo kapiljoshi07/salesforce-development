@@ -57,4 +57,31 @@ public with sharing class CT_LocationController {
         }
         return mapOfStatusAndNumOfLoc;
     }
+
+    /**
+     * Aggregates passed location ids where person health Status is 'Red' and calculates the red score and status and update the passed location ids
+     * @params: Set<Id>  
+     * @return: none
+     */
+    public static void updateRedScoreOnLocations(Set<Id> locationIds){
+        System.debug('INSIDE updateRedScoreOnLocations');
+        List<Location__c> locationsToUpdate = new List<Location__c>();
+        String query = 'SELECT Location__c, Count(Id) FROM Location_Tracing__c WHERE Person__r.Health_Status__c = \'Red\' AND Visit_Date__c = LAST_n_DAYS:10 AND Location__c IN:locationIds GROUP BY Location__c';
+        Map<String, Object> params = new Map<String, Object>{'locationIds'=>locationIds};
+        AggregateResult[] aggResArray = Database.queryWithBinds(query, params, AccessLevel.USER_MODE);
+        for(AggregateResult aggRes: aggResArray){
+            String locationId = (String)aggRes.get('Location__c');
+            Integer redScore = (Integer)aggRes.get('expr0');
+            String status = CT_LocationController.calcStatus(redScore);
+            locationsToUpdate.add(new Location__c(Id=locationId, Status__c=status,Red_Score__c=redScore));
+        }
+        if(locationsToUpdate!=null && locationsToUpdate.size()>0){
+            System.debug(locationsToUpdate);
+            update locationsToUpdate;
+        }
+    }
+
+    private static String calcStatus(Integer redScore){
+        return redScore>10 ? 'Red' : redScore>5 ? 'Orange' : redScore>0 ? 'Yellow' : 'Green';
+    }
 }
