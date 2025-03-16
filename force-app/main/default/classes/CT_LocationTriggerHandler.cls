@@ -22,6 +22,6 @@ public with sharing class CT_LocationTriggerHandler {
     }
 
     public static void afterUpdate(List<Location__c> newLocations, Map<Id, Location__c> oldLocationMap){
-
+        CT_LocationController.updatePersonStatusForRedLocations(newLocations, oldLocationMap);
     }
 }

@@ -66,6 +66,35 @@ public with sharing class CT_LocationController {
         return mapOfStatusAndNumOfLoc;
     }
 
+    /*
+    * Retreives location tracings for a passed set of location ids
+    * Finds person for the retrieved tracings and update the status to 'Yellow'
+    * @param List<Location__c>, Map<Id, Location__c>
+    * @return none
+    */
+    public static void updatePersonStatusForRedLocations(List<Location__c> newLocations, Map<Id, Location__c> oldLocationMap){
+        Set<Id> redStatusLocIds = new Set<Id>();
+        for(Location__c loc: newLocations){
+            if(loc.Status__c != oldLocationMap.get(loc.Id).Status__c && loc.Status__c == 'Red'){
+                redStatusLocIds.add(loc.Id);
+            }
+        }
+        Set<Id> idSetForPersonsToUpdate = new Set<Id>();
+        List<Location_Tracing__c> traces = CT_LocationTracingController.getLocationTracingsByLocationId(redStatusLocIds);
+        for(Location_Tracing__c trace: traces){
+            idSetForPersonsToUpdate.add(trace.Person__c);
+        }
+        List<Person__c> personsToUpdate = new List<Person__c>();
+        for(Person__c person: [SELECT Id,Health_Status__c FROM Person__c WHERE Id IN: idSetForPersonsToUpdate AND Health_Status__c = 'Green']){
+            person.Health_Status__c = 'Yellow';
+            personsToUpdate.add(person);
+        }
+        if(personsToUpdate.size()>0 && personsToUpdate!=null){
+            update personsToUpdate;
+        }
+
+    }
+
     /**
      * Aggregates passed location ids where person health Status is 'Red' and calculates the red score and status and update the passed location ids
      * @params: Set<Id>  
