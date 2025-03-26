@@ -1,0 +1,34 @@
+<aura:component access="global" implements="force:appHostable,flexipage:availableForAllPageTypes">
+  <aura:attribute name="viewType" type="String" access="private" />
+  <div class="container">
+    <lightning:layout multipleRows="true">
+      <lightning:layoutItem size="12">
+        <c:CT_HealthHeader view="{!v.viewType}"></c:CT_HealthHeader>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="12">
+        <lightning:tabset variant="vertical">
+          <lightning:tab onactive="{! c.handleActive }" label="Person View" id="person">
+            <lightning:layout multipleRows="true">
+              <lightning:layoutItem size="8">
+                <c:CT_RecentChanges aura:id="personView" view="{! v.viewType}"></c:CT_RecentChanges>
+              </lightning:layoutItem>
+              <lightning:layoutItem size="4">
+                <c:CT_RecordForm></c:CT_RecordForm>
+              </lightning:layoutItem>
+            </lightning:layout>
+          </lightning:tab>
+          <lightning:tab onactive="{! c.handleActive }" label="Location View" id="location">
+            <lightning:layout multipleRows="true">
+              <lightning:layoutItem size="8">
+                <c:CT_RecentChanges aura:id="locationView" view="{! v.viewType}"></c:CT_RecentChanges>
+              </lightning:layoutItem>
+              <lightning:layoutItem size="4">
+                <c:CT_RecordForm></c:CT_RecordForm>
+              </lightning:layoutItem>
+            </lightning:layout>
+          </lightning:tab>
+        </lightning:tabset>
+      </lightning:layoutItem>
+    </lightning:layout>
+  </div>
+</aura:component>

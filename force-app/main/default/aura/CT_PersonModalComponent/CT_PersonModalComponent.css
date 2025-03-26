@@ -1,0 +1,46 @@
+.THIS.container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background: white;
+  border-radius: 2rem;
+  box-shadow: 0px -2px 16px #023047;
+}
+
+.THIS .person-header{
+  text-align: left;
+  font-size: medium;
+  font-weight: 600;
+  padding: 16px 12px;
+  border-radius: 2rem 2rem 0 0;
+}
+
+.THIS .contact-header{
+  text-align: left;
+  font-size: large;
+  font-weight: bold;
+}
+
+.THIS .field-title{
+  font-size: small;
+  text-transform: capitalize;
+}
+
+.THIS .field-info{
+  font-size: medium;
+  text-transform: uppercase;
+  overflow: auto;
+}
+
+.THIS .Red{
+  background: #e01a4f;
+}
+.THIS .Green{
+  background: #38b000;
+}
+.THIS .Yellow{
+  background: #ffdd00;
+}
+.THIS .Orange{
+  background: #f8961e;
+}

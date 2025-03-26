@@ -1,0 +1,27 @@
+<aura:component controller="CT_RecordFormController">
+  <aura:attribute name="recordid" type="String" access="private" />
+  <aura:attribute name="objectapiname" type="String" access="private" />
+  <aura:attribute name="mode" type="String" access="private" />
+  <aura:attribute name="status" type="String" access="private" />
+  <aura:attribute name="fields" type="String[]" access="private" />
+  <aura:attribute name="showButton" type="Boolean" access="private" />
+  <aura:handler event="c:CT_RecordViewOrUpdateAppEvent" action="{! c.handleAppEvent}" />
+  <aura:if isTrue="{! !empty(v.recordid)}">
+    <div class="{!v.status + ' container' + ' slds-var-p-around_medium'}">
+      <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12">
+          <lightning:recordForm recordId="{! v.recordid}" objectApiName="{! v.objectapiname}" mode="{! v.mode}"
+            fields="{! v.fields}" />
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12">
+          <aura:if isTrue="{! v.showButton}">
+            <div class="slds-align_absolute-center slds-var-m-top_large">
+              <lightning:button variant="destructive" title="Update Status to Red" label="Update Status to Red"
+                onclick="{! c.handleClick}" />
+            </div>
+          </aura:if>
+        </lightning:layoutItem>
+      </lightning:layout>
+    </div>
+  </aura:if>
+</aura:component>

@@ -1,0 +1,19 @@
+.THIS{
+}
+
+.THIS .header-title{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.THIS .green{
+  color: #38b000;
+}
+.THIS .yellow{
+  color: #ffdd00;
+}
+.THIS .orange{
+  color: #f8961e;
+}
+.THIS .red{
+  color: #e01a4f;
+}
