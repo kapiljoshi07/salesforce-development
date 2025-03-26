@@ -1,0 +1,43 @@
+<aura:component controller="CT_LocationTabController"
+  implements="force:appHostable, flexipage:availableForAllPageTypes">
+  <aura:attribute name="recordId" type="String" access="private" />
+  <aura:attribute name="showModal" type="Boolean" access="private" />
+  <aura:attribute name="issearching" type="Boolean" access="private" />
+  <aura:attribute name="data" type="Object" access="private" />
+  <div class="slds-page-header container">
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-title">
+        <div class="slds-media">
+          <div class="slds-media__figure">
+            <lightning:icon iconName="standard:location" alternativeText="Location View" title="Location View" />
+          </div>
+          <div class="slds-media__body">
+            <div class="slds-page-header__name">
+              <div class="slds-page-header__name-title">
+                <h1>
+                  <span class="slds-page-header__title slds-truncate" title="User View">Location View</span>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__col-actions">
+        <div class="slds-page-header__controls">
+          <div class="slds-page-header__control">
+            <lightning:input name="search-input" label="Search Input" type="search" variant="label-hidden"
+              value="{! v.recordId}" isLoading="{! v.issearching }" />
+          </div>
+          <div class="slds-page-header__control">
+            <lightning:button label="Search Location" title="Search Location" onclick="{! c.locationSearchHandler }" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <aura:if isTrue="{! v.showModal}">
+      <c:CT_LocationModalComponent data="{! v.data}"></c:CT_LocationModalComponent>
+    </aura:if>
+  </div>
+</aura:component>

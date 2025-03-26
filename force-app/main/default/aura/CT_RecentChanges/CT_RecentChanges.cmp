@@ -1,0 +1,17 @@
+<aura:component controller="CT_RecentChangesController">
+  <aura:attribute name="data" type="Object" />
+  <aura:attribute name="columns" type="List" />
+  <aura:attribute name="view" type="String" access="public" />
+  <aura:attribute name="issearching" type="Boolean" access="private" />
+  <aura:method name="renderView" action="{! c.viewHandler}" description="To render component based on view type" />
+  <lightning:card title="Recent Updates">
+    <aura:set attribute="actions">
+      <lightning:input aura:id="searchBar" name="enter-search" label="Hit 'Enter' to search"
+        isLoading="{! v.issearching }" type="search" placeholder="Search here..." oncommit="{! c.handleSearchEvent}" />
+    </aura:set>
+    <div class="slds-var-p-around_medium">
+      <lightning:datatable keyField="Id" data="{! v.data }" columns="{! v.columns }" hideCheckboxColumn="true"
+        onrowaction="{! c.onRowActionHandler}" />
+    </div>
+  </lightning:card>
+</aura:component>

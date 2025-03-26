@@ -2,12 +2,12 @@ public with sharing class CT_LocationTracingController {
     
     /*
     * Retreives a list of 100 Location Tracing records
-    * The list is sorted by Visit Date in descending order
+    * The list is sorted by Visit Date in descending order for last 30 days
     * @param String Location id
     * @return List<Location_Tracing__c>
     */
     public static List<Location_Tracing__c> getVisitors(String locationId){
-        return [SELECT Id, Name, Person__c, Location__c, Visit_Date__c FROM Location_Tracing__c WHERE Location__c =:locationId ORDER BY Visit_Date__c DESC NULLS LAST LIMIT 100];
+        return [SELECT Id, Name, Person__c,Person__r.Health_Status__c,Person__r.Token__c, Location__c, Visit_Date__c FROM Location_Tracing__c WHERE Location__c =:locationId AND Visit_Date__c =LAST_n_DAYS:30 ORDER BY Visit_Date__c DESC NULLS LAST LIMIT 100];
     }
 
     /*

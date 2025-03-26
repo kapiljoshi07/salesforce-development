@@ -1,0 +1,58 @@
+<aura:component controller="CT_HealthHeaderController">
+  <aura:handler name="render" value="{!this}" action="{!c.onRender}" />
+  <aura:attribute name="view" type="String" access="public" />
+  <aura:attribute name="greenCount" type="Integer" access="private" />
+  <aura:attribute name="yellowCount" type="Integer" access="private" />
+  <aura:attribute name="orangeCount" type="Integer" access="private" />
+  <aura:attribute name="redCount" type="Integer" access="private" />
+  <div class="slds-page-header">
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-title">
+        <div class="slds-media">
+          <div class="slds-media__figure">
+            <lightning:icon iconName="standard:queue" alternativeText="Contact Tracing" title="Contact Tracing" />
+          </div>
+          <div class="slds-media__body">
+            <div class="slds-page-header__name">
+              <div class="slds-page-header__name-title">
+                <h1>
+                  <span>Contact Tracing</span>
+                  <span class="slds-page-header__title slds-truncate" title="{! v.view}">{!v.view}</span>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__col-actions">
+        <div class="slds-page-header__controls">
+          <div class="slds-page-header__control">
+            <lightning:button label="Add New" title="Add New" onclick="{! c.handleClick }" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slds-page-header__row slds-page-header__row_gutters">
+      <div class="slds-page-header__col-details">
+        <ul class="slds-page-header__detail-row">
+          <li class="slds-page-header__detail-block">
+            <div class="slds-text-title green header-title" title="Green">Green</div>
+            <div class="green header-title">{! v.greenCount}</div>
+          </li>
+          <li class="slds-page-header__detail-block">
+            <div class="slds-text-title yellow header-title" title="Yellow">Yellow</div>
+            <div class="yellow header-title">{! v.yellowCount}</div>
+          </li>
+          <li class="slds-page-header__detail-block">
+            <div class="slds-text-title orange header-title" title="Orange">Orange</div>
+            <div class="orange header-title">{! v.orangeCount}</div>
+          </li>
+          <li class="slds-page-header__detail-block">
+            <div class="slds-text-title red header-title" title="Red">Red</div>
+            <div class="red header-title">{! v.redCount}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</aura:component>

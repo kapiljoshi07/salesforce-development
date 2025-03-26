@@ -1,0 +1,38 @@
+<aura:component>
+  <aura:handler name="init" value="{! this}" action="{! c.doInit}" />
+  <aura:attribute name="data" type="Object" access="public" />
+  <aura:attribute name="contacts_columns" type="String[]" access="private" />
+  <aura:attribute name="contacts_data" type="Object" />
+  <div class="container">
+    <div class="{! v.data.healthStatus + ' person-header'}">
+      {! v.data.name}, your health status is {! v.data.healthStatus}
+    </div>
+    <div class="person-summary">
+      <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="3" padding="around-medium" flexibility="auto">
+          <div class="field-title" title="Phone">Phone</div>
+          <div class="field-info">{! v.data.mobile}</div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3" padding="around-medium" flexibility="auto">
+          <div class="field-title" title="Token">Token</div>
+          <div class="field-info">{! v.data.token}</div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3" padding="around-medium" flexibility="auto">
+          <div class="field-title" title="Status Updated On">Status Updated On</div>
+          <div class="field-info">{! v.data.lastStatusUpdateDate}</div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3" padding="around-medium" flexibility="auto">
+          <div class="field-title" title="Contacts in last 30 days">Contacts in last 30 days</div>
+          <div class="field-info">{! v.data.closeContactsCount}</div>
+        </lightning:layoutItem>
+      </lightning:layout>
+    </div>
+    <div class="slds-var-m-around_medium">
+      <div class="contact-header">Recent Contacts</div>
+      <div>
+        <lightning:datatable keyField="token" data="{! v.contacts_data }" columns="{! v.contacts_columns }"
+          hideCheckboxColumn="true" />
+      </div>
+    </div>
+  </div>
+</aura:component>
